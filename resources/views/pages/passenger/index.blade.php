@@ -40,7 +40,7 @@
                     </form>
                 </div>
 
-                <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+                <div class="card shadow-sm p-4 mb-3 bg-white rounded">
                     <table class="table table-striped table-hover">
                         <thead class="table-dark">
                         <tr>
@@ -77,7 +77,7 @@
                         </tbody>
                     </table>
                 </div>
-
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Go Back</button>
             </div>
         </div>
     </div>

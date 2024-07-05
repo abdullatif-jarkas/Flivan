@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FlightMaster;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class FlightMasterController extends Controller
 {
@@ -11,8 +13,10 @@ class FlightMasterController extends Controller
     public function __construct(){
         $this->flightmaster = new FlightMaster();
     }
-    public function index()
+    public function index(User $user)
     {
+        Gate::authorize('isAdmin', $user);
+
         $response['flightmasters'] = $this->flightmaster->all();
         return view('pages.flightmaster.index')->with($response);
     }

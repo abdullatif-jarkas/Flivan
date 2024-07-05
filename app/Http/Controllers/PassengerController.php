@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Gate;
 use App\Models\Passenger;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PassengerController extends Controller
@@ -12,8 +13,10 @@ class PassengerController extends Controller
     public function __construct(){
         $this->passenger = new Passenger();
     }
-    public function index()
+    public function index(User $user)
     {
+        Gate::authorize('isAdmin', $user);
+
         $response['passengers'] = $this->passenger->all();
         return view('pages.passenger.index')->with($response);
     }

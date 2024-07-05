@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aircraft;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AircraftController extends Controller
 {
@@ -12,8 +14,9 @@ class AircraftController extends Controller
         $this->aircraft = new Aircraft();
 
     }
-    public function index()
+    public function index(User $user)
     {
+        Gate::authorize('isAdmin', $user);
         $response['aircrafts'] = $this->aircraft->all();
         return view('pages.aircraft.index')->with($response);
     }

@@ -7,6 +7,8 @@ use App\Models\FlightMaster;
 use App\Models\FlightTransaction;
 use App\Models\Passenger;
 use App\Models\Aircraft;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class FlightTransactionController extends Controller
 {
@@ -14,8 +16,9 @@ class FlightTransactionController extends Controller
     public function __construct(){
         $this->flighttransactions = new FlightTransaction();
     }
-    public function index()
+    public function index(User $user)
     {
+        Gate::authorize('isAdmin', $user);
         $flighttransactions = FlightTransaction::with('passenger', 'flightmaster', 'aircraft')->get();
         $passengers = Passenger::all();
         $flightmasters = FlightMaster::all();
@@ -52,17 +55,31 @@ class FlightTransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(FlightTransaction $flighttransaction)
     {
-        //
+        $passengers = Passenger::all();
+        $flightmasters = FlightMaster::all();
+        $aircrafts = Aircraft::all();
+        return view('pages.flighttransaction.edit', compact('flighttransaction', 'passengers', 'flightmasters', 'aircrafts'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Flighttransaction $flighttransaction)
     {
-        //
+        $request->validate([
+            'seatnumber' => 'required|string|max:255',
+            'date' => 'required|date',
+            'fare' => 'required|numeric',
+            'passenger_id' => 'required|exists:passengers,id',
+            'flightmasters_id' => 'required|exists:flightmasters,id',
+            'aircrafts_id' => 'required|exists:aircrafts,id',
+        ]);
+
+        $flighttransaction->update($request->all());
+
+        return redirect()->route('flighttransaction.index')->with('success', 'Flight transaction updated successfully.');
     }
 
     /**

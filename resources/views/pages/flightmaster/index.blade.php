@@ -70,7 +70,7 @@
                         @endforeach
                     </tbody>
                 </table>
-
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Go Back</button>
             </div>
         </div>
     </div>
