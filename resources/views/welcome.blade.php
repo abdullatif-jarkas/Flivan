@@ -75,46 +75,50 @@
     </header>
 
     @if (Route::has('login'))
-        @auth
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-10">
-                        <div class="card">
-                            <div class="card-header" style="background-color: #1976d2; color: white;">
-                                {{ __('Flight Masters') }}</div>
+    @auth
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header" style="background-color: #1976d2; color: white;">
+                            {{ __('Flight Masters') }}</div>
 
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-hover" style="background-color: #e3f2fd;">
-                                        <thead>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" style="background-color: #e3f2fd;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Departure City</th>
+                                            <th scope="col">Arrival City</th>
+                                            <th scope="col">Departure Time</th>
+                                            <th scope="col">Arrival Time</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($flightmasters as $key => $flightmaster)
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Departure City</th>
-                                                <th scope="col">Arrival City</th>
-                                                <th scope="col">Departure Time</th>
-                                                <th scope="col">Arrival Time</th>
+                                                <td>{{ ++$key }}</td>
+                                                <td>{{ $flightmaster->DepartureCity }}</td>
+                                                <td>{{ $flightmaster->ArrivalCity }}</td>
+                                                <td>{{ $flightmaster->DepartureTime }}</td>
+                                                <td>{{ $flightmaster->ArrivalTime }}</td>
+                                                <td>
+                                                    <a href="{{ route('reserve.create', ['flightmaster' => $flightmaster->id]) }}" class="btn btn-primary">Reserve</a>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($flightmasters as $key => $flightmaster)
-                                                <tr>
-                                                    <td>{{ ++$key }}</td>
-                                                    <td>{{ $flightmaster->DepartureCity }}</td>
-                                                    <td>{{ $flightmaster->ArrivalCity }}</td>
-                                                    <td>{{ $flightmaster->DepartureTime }}</td>
-                                                    <td>{{ $flightmaster->ArrivalTime }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endauth
-    @endif
+        </div>
+    @endauth
+@endif
 
     {{--
     <section class="section__container booking__container">

@@ -11,12 +11,18 @@ class FlightMaster extends Model
     protected $table = 'flightmasters';
     protected $primaryKey = 'id';
     protected $fillable = [
-            'DepartureCity',
-            'ArrivalCity',
-            'DepartureTime',
-            'ArrivalTime',
-        ];
-    public function flighttransactions(){
+        'DepartureCity',
+        'ArrivalCity',
+        'DepartureTime',
+        'ArrivalTime',
+    ];
+    public function flighttransactions()
+    {
         return $this->hasMany('App\Models\FlightTransaction', 'flightmaster_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }
