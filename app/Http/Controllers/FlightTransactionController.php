@@ -26,15 +26,6 @@ class FlightTransactionController extends Controller
 
         return view('pages.flighttransaction.index', compact('passengers', 'flightmasters', 'aircrafts', 'flighttransactions'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -43,15 +34,6 @@ class FlightTransactionController extends Controller
         $this->flighttransactions->create($request->all());
         return redirect()->back();
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
